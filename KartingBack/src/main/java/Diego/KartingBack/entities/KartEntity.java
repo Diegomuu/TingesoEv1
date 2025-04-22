@@ -6,6 +6,7 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "karts")
 @Entity
 public class KartEntity {
 
