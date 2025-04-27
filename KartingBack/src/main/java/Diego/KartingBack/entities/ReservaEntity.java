@@ -1,24 +1,54 @@
 package Diego.KartingBack.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "reserva")
 @Entity
+@Table(name = "reservas")
 public class ReservaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
     private Long id;
-    private String codigoReserva;
-    private LocalDateTime fechaReserva;
-    private int cantidadPersonas;
 
+    private String fechaReserva; // Fecha de la reserva
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reserva_id")
+    private List<ClienteEntity> clientes; // Lista de clientes asociados a la reserva
+
+    private int cantidadPersonas; // Número total de personas en la reserva
+
+    public ReservaEntity() {}
+
+    public ReservaEntity(String fechaReserva, List<ClienteEntity> clientes, int cantidadPersonas) {
+        this.fechaReserva = fechaReserva;
+        this.clientes = clientes;
+        this.cantidadPersonas = cantidadPersonas;
+    }
+
+    // Getters y Setters
+    public String getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(String fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+
+    public List<ClienteEntity> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<ClienteEntity> clientes) {
+        this.clientes = clientes;
+    }
+
+    public int getCantidadPersonas() {
+        return cantidadPersonas;
+    }
+
+    public void setCantidadPersonas(int cantidadPersonas) {
+        this.cantidadPersonas = cantidadPersonas;
+    }
 }
