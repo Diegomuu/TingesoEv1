@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import "../assets/styles.css";
 
 const Tarifas = () => {
   const location = useLocation();

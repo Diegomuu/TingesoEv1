@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "../assets/styles.css";
 
 const RegisterPilot = () => {
   const [numClients, setNumClients] = useState(1);
