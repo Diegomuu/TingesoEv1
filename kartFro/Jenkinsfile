@@ -15,8 +15,8 @@ pipeline{
                 dir("kartFro"){
                     script{
                          withDockerRegistry(credentialsId: 'docker-credentials'){
-                            bat "docker build -t diegomuu/kartFro ."
-                            bat "docker push diegomuu/kartFro"
+                            bat "docker build -t diegomuu/kart-front ."
+                            bat "docker push diegomuu/kart-front"
                         }
                     }                    
                 }
