@@ -1,17 +1,14 @@
-import React from 'react';
-import './Navbar.css'; 
+import React from "react";
+import { Link } from "react-router-dom";
+import "../assets/styles.css";
 
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <a href="/">MiLogo</a>
-      </div>
-      <ul className="navbar-links">
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/about">Acerca de</a></li>
-        <li><a href="/services">Servicios</a></li>
-        <li><a href="/contact">Contacto</a></li>
+      <ul>
+        <li><Link to="/">Inicio</Link></li>
+        <li><Link to="/pagos">Pagos</Link></li>
+        <li><Link to="/rack-semanal">Rack Semanal</Link></li>
       </ul>
     </nav>
   );

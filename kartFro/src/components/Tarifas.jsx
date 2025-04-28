@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Navbar from './Navbar'; // ✅ Importamos el Navbar
 import "../assets/styles.css";
 
 const Tarifas = () => {
@@ -8,17 +9,17 @@ const Tarifas = () => {
   const { clientes, cantidadPersonas } = location.state || { clientes: [], cantidadPersonas: 0 };
 
   const [tarifas, setTarifas] = useState([]);
-  const [vueltas, setVueltas] = useState(10); // Número de vueltas predeterminado
+  const [vueltas, setVueltas] = useState(10);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (clientes.length > 0) {
+    if (clientes.length > 0 && tarifas.length === 0) { 
       calcularTarifas();
     }
   }, [clientes, vueltas]);
 
-  const calcularTarifas = () => {
+  const calcularTarifas = async () => {
     if (!clientes || clientes.length === 0) {
       setError("No hay clientes registrados para calcular la tarifa.");
       return;
@@ -27,40 +28,39 @@ const Tarifas = () => {
     setLoading(true);
     setError(null);
 
-    const requestBody = {
-      clientes,
-      vueltas,
-    };
-
-    fetch(`${import.meta.env.VITE_BASE}/reservas/calcularTarifa`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Error al calcular las tarifas');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTarifas(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error:', err);
-        setError('Hubo un problema al calcular las tarifas. Inténtalo de nuevo.');
-        setLoading(false);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE}/reservas/calcularTarifa`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientes, vueltas }),
       });
+
+      if (!response.ok) throw new Error("Error al calcular las tarifas");
+
+      const data = await response.json();
+      setTarifas(data);
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Hubo un problema al calcular las tarifas. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const irAPagar = () => {
-    const montoTotal = tarifas.reduce((total, tarifa) => total + tarifa.tarifaFinal, 0);
-    navigate('/pagos', { state: { tarifas, montoTotal } });
+    const montoTotal = tarifas.reduce((total, tarifa) => total + tarifa.tarifaFinal, 0); // ✅ Definirlo antes
+  
+    console.log("Monto total calculado:", montoTotal); // ✅ Verificación en consola
+  
+    navigate('/pagos', { state: { tarifas, montoTotal, vueltas } }); // ✅ Ahora `montoTotal` ya existe
   };
+  
+  
 
   return (
     <div>
+      <Navbar /> {/* ✅ Agregamos el Navbar */}
+
       <h1>Tarifas</h1>
       <p>Cantidad de personas: {cantidadPersonas}</p>
 

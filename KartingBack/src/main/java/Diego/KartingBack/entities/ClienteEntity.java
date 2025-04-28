@@ -3,8 +3,7 @@ package Diego.KartingBack.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "cliente")
 public class ClienteEntity {
@@ -16,6 +15,15 @@ public class ClienteEntity {
     private String nombre;
     private int visitasMensuales;
     private boolean cumpleanos;
+
+    public ClienteEntity() {}
+
+    public ClienteEntity(String nombre, int visitasMensuales, boolean cumpleanos) {
+        this.nombre = nombre;
+        this.visitasMensuales = visitasMensuales;
+        this.cumpleanos = cumpleanos;
+    }
+
 
     public Long getId() {
         return id;

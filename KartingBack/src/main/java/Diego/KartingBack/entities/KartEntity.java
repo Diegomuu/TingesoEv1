@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Table(name = "karts")
 @Entity
 public class KartEntity {
@@ -16,6 +15,14 @@ public class KartEntity {
     private Long codigo;
     private String estado;
     private String modelo;
+
+    public KartEntity(Long codigo, String estado, String modelo) {
+        this.codigo = codigo;
+        this.estado = estado;
+        this.modelo = modelo;
+    }
+
+    public KartEntity() {}
 
     public Long getCodigo() {
         return codigo;

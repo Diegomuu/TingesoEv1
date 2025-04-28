@@ -13,7 +13,7 @@ const Home = () => {
           Organiza eventos, revisa estadísticas y disfruta de la velocidad. 🚀
         </p>
         <div className="home-buttons">
-          <button className="btn-primary">Ver Carreras</button>
+          <button className="btn-primary">Ver Reportes</button>
           <Link to="/register-pilot">
             <button className="btn-secondary">Registrar Piloto</button>
           </Link>
